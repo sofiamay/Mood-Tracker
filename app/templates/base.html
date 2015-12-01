@@ -1,0 +1,14 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }} - Mood Tracker</title>
+    {% else %}
+    <title>Welcome to Mood Tracker</title>
+    {% endif %}
+  </head>
+  <body>
+  <div>
+    {% block content %}{% endblock %}
+  </div>
+  </body>
+</html>
