@@ -37,6 +37,6 @@ class Mood(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 	def __repr__(self):
-		return '<Mood %r>' % (self)
+		return '<Mood %r>' % (self.name)
 
 

@@ -1,5 +1,8 @@
-from flask import render_template, request, url_for, session
+from flask import render_template, flash, redirect, session, url_for, request
+from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oauth
+from .models import User
+
 
 facebook = oauth.remote_app('facebook',
     base_url='https://graph.facebook.com/',
@@ -8,7 +11,7 @@ facebook = oauth.remote_app('facebook',
     authorize_url='https://www.facebook.com/dialog/oauth',
     consumer_key='872766896169946',
     consumer_secret='47248c3813f7833ad586871d3675bffd',
-    request_token_params={'scope': 'email'}
+    request_token_params={'scope': 'public_profile, email'},
 )
 
 @facebook.tokengetter
@@ -46,7 +49,7 @@ def facebook_authorized(resp):
         flash(u'There was a problem logging in.')
         return redirect(next_url)
     session['oauth_token'] = (resp['access_token'], '')
-    user_data = facebook.get('/me').data
+    user_data = facebook.get('/me/?fields=id,email,first_name,last_name').data
     user = User.query.filter(User.email == user_data['email']).first()
     if user is None:
         new_user = User(email=user_data['email'], first_name=user_data['first_name'], last_name=user_data['last_name'])

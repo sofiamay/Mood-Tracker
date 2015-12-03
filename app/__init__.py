@@ -1,7 +1,7 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
-from flask.ext.oauth import OAuth
+from flask_oauthlib.client import OAuth
 
 app = Flask(__name__)
 app.config.from_object('config')
