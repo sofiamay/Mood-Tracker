@@ -24,14 +24,15 @@ def load_user(id):
 	return User.query.get(int(id))
 
 @app.route('/')
-@app.route('/index')
+@app.route('/home')
 def index():
-	    # Include:
-    	# User
-    	# Current Date
-    	# Mood history
-    	# Button to log mood
-	return render_template('index.html')
+	    #description of app + login button
+	return render_template('home.html')
+
+@app.route('/welcome')
+def welcome():
+	#Hello! How are you feeling?
+	return render_template('welcome.html')
 
 @app.route('/login')
 def facebook_login():
